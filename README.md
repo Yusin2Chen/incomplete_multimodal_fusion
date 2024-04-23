@@ -9,3 +9,4 @@ Employing a fusion-centric training regimen bolstered by reconstruction and cont
 
 By offering a comprehensive solution to the challenge of incomplete multimodal learning, our approach significantly advances the frontier of remote sensing data fusion, opening avenues for enhanced performance and adaptability in diverse operational contexts.
 
+![avatar](/images/Fig6-1.jpg)
