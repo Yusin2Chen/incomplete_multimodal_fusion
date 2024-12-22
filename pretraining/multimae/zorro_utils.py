@@ -246,13 +246,13 @@ class Block_Fusion(nn.Module):
         super().__init__()
         self.norm1 = norm_layer(dim)
         self.norm2 = norm_layer(dim)
-        self.attn = Attention(dim=dim, dim_head=dim_head, heads=heads)
+        self.attn = CrossAttention(dim=dim, dim_head=dim_head, heads=heads)
         self.mlp = FeedForward(dim=dim, mult=ff_mult)
 
     def forward(self, x, attn_mask):
         B, _, _, _ = x.shape
         x = rearrange(x, 'b n m d -> (b n) m d')
-        x = x + self.attn(self.norm1(x), attn_mask=attn_mask)
+        x[:, -1, :] = x[:, -1, :] + self.attn(self.norm1(x[:, -1, :]), self.norm1(x[:, ：-1, :]))
         x = rearrange(x[:, -1, :].squeeze(1), '(b n) d -> b n d', b=B)
         x = x + self.mlp(self.norm2(x))
         return x
